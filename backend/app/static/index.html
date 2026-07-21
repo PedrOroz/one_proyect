@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="FinTech Multi-Agent Support System — Asistente de IA bancario" />
+  <title>FinTech Support — Asistente de IA</title>
+
+  <!-- Google Fonts: Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;450;500;600;700&display=swap" rel="stylesheet" />
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="/static/css/style.css" />
+
+  <!-- Favicon (inline SVG as data URI) -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect fill='%23D3E600' rx='18' width='100' height='100'/><text y='72' x='18' font-size='60' font-family='sans-serif' fill='%230b132b' font-weight='bold'>F</text></svg>" />
+</head>
+<body>
+
+  <div class="app" id="app">
+
+    <!-- ═══ Sidebar ═══ -->
+    <aside class="sidebar" id="sidebar">
+
+      <!-- Logo -->
+      <div class="sidebar__header">
+        <div class="sidebar__logo">
+          <div class="sidebar__logo-icon">O</div>
+          <div class="sidebar__logo-text">Oroz<span>Bank</span> Support</div>
+        </div>
+      </div>
+
+      <!-- New Chat Button -->
+      <div class="sidebar__new-chat">
+        <button class="btn-new-chat" id="btnNewChat" title="Crear nueva conversación">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="12" y1="5" x2="12" y2="19"></line>
+            <line x1="5" y1="12" x2="19" y2="12"></line>
+          </svg>
+          Nuevo Chat
+        </button>
+      </div>
+
+      <!-- Session History -->
+      <div class="sidebar__history" id="sidebarHistory">
+        <div class="sidebar__history-label">Historial de Sesiones</div>
+        <div class="sidebar__sessions" id="sessionsList">
+          <!-- Sessions rendered dynamically by JS -->
+        </div>
+        <div class="sidebar__empty-state" id="emptyState">
+          Aún no hay conversaciones.<br/>Inicia una nueva para comenzar.
+        </div>
+      </div>
+
+      <!-- Footer: Online Status -->
+      <div class="sidebar__footer">
+        <div class="sidebar__status">
+          <div class="status-dot"></div>
+          <span class="sidebar__status-text">Estado: Online</span>
+        </div>
+      </div>
+
+    </aside>
+
+    <!-- ═══ Mobile Overlay ═══ -->
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <!-- ═══ Main Chat Panel ═══ -->
+    <main class="chat-panel" id="chatPanel">
+
+      <!-- Chat Header -->
+      <header class="chat-header">
+        <!-- Hamburger (mobile only) -->
+        <button class="chat-header__hamburger" id="btnHamburger" aria-label="Abrir menú lateral">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <line x1="3" y1="12" x2="21" y2="12"></line>
+            <line x1="3" y1="18" x2="21" y2="18"></line>
+          </svg>
+        </button>
+
+        <!-- Avatar -->
+        <div class="chat-header__avatar">🤖</div>
+
+        <!-- Info -->
+        <div class="chat-header__info">
+          <div class="chat-header__name">
+            FinTech Assistant
+            <span class="chat-header__badge">● Online</span>
+          </div>
+          <div class="chat-header__subtitle">Agente de IA</div>
+        </div>
+      </header>
+
+      <!-- Chat Messages -->
+      <div class="chat-messages" id="chatMessages">
+
+        <!-- Welcome Screen (shown when no messages) -->
+        <div class="chat-welcome" id="chatWelcome">
+          <div class="chat-welcome__icon">🤖</div>
+          <h2 class="chat-welcome__title">¡Hola! Soy tu asistente FinTech</h2>
+          <p class="chat-welcome__subtitle">
+            Estoy aquí para ayudarte con consultas financieras, soporte técnico y más. ¿En qué puedo asistirte hoy?
+          </p>
+          <div class="chat-welcome__suggestions">
+            <button class="suggestion-chip" data-suggestion="¿Cuáles son las tasas de interés actuales?">
+              💰 Tasas de interés
+            </button>
+            <button class="suggestion-chip" data-suggestion="Necesito ayuda con mi cuenta bancaria">
+              🏦 Soporte de cuenta
+            </button>
+            <button class="suggestion-chip" data-suggestion="¿Cómo puedo solicitar un préstamo?">
+              📋 Solicitar préstamo
+            </button>
+            <button class="suggestion-chip" data-suggestion="Quiero reportar un problema con una transacción">
+              🔒 Reportar problema
+            </button>
+          </div>
+        </div>
+
+        <!-- Typing Indicator -->
+        <div class="typing-indicator" id="typingIndicator">
+          <div class="typing-indicator__bubble">
+            <div class="typing-indicator__dot"></div>
+            <div class="typing-indicator__dot"></div>
+            <div class="typing-indicator__dot"></div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Input Area -->
+      <div class="chat-input-area">
+        <div class="chat-input-wrapper">
+          <textarea
+            class="chat-input"
+            id="chatInput"
+            placeholder="Escribe tu mensaje aquí..."
+            rows="1"
+            aria-label="Escribir mensaje"
+          ></textarea>
+          <button class="btn-send" id="btnSend" disabled title="Enviar mensaje">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="22" y1="2" x2="11" y2="13"></line>
+              <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- Footer Note -->
+      <div class="chat-footer">
+        <div class="chat-footer__note">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="12" y1="16" x2="12" y2="12"></line>
+            <line x1="12" y1="8" x2="12.01" y2="8"></line>
+          </svg>
+          Nota: Estás interactuando con un sistema automatizado de IA.
+        </div>
+      </div>
+
+    </main>
+
+  </div>
+
+  <!-- Toast Notifications -->
+  <div class="toast toast--error" id="toastError"></div>
+  <div class="toast toast--success" id="toastSuccess"></div>
+
+  <!-- App Script -->
+  <script src="/static/js/app.js"></script>
+
+</body>
+</html>
