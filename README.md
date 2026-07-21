@@ -91,6 +91,30 @@ one_proyect/
    ```
    http://localhost:8000
    ```
+## Ejemplo preguntas al agente.
+1.
+ ```
+   "Hi, I'm Sarah Chen. I would like to know if they are going to charge me anything to change my debit card that broke, and also if my account has any cashback benefits."
+   ```
+ ```
+   "You must inform them in detail that as a Premium customer, the card replacement fee is $0.00 and that they have an active benefit of 1% Cashback along with travel assistance and priority support."
+   ```
+
+2.
+    ```
+   "Please help! I just saw a strange movement in my account in my app that I didn't make. I think my account was hacked or someone cloned my card. What do I do so they don't steal my money?"
+   ```
+  ```
+   "I'm sorry to hear this. To protect your funds, I have proceeded to place a preventative lock on your account immediately under our Zero Liability policy. You have a period of 24 hours for your responsibility to be $0..."
+   ```
+
+3.
+   ```
+  "Hello, I'm James Okafor. I'm trying to send an emergency transfer to my brother who is out of the country but the platform won't let me. What is my daily limit for international transfers to be able to send it now?"
+   ```
+     ```
+  "We detected that your account has an active restriction for international shipments due to internal verification policies. Please contact our support line..."
+   ```
 
 ## Desarrollo Local
 
